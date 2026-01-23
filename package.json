@@ -1,0 +1,10 @@
+{
+    "name": "react-playground",
+    "version": "1.0.0",
+    "description": "experiment with react components",
+    "scripts": {
+        "serve": "node serve.js"
+    },
+    "author": "Aelberth Cheong",
+    "license": "MIT"
+}

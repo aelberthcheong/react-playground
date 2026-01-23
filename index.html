@@ -1,0 +1,105 @@
+<!-- 
+    React Playground
+    ----------------
+    - Bereksperimen dengan komponen
+    - Visual testing
+    - zero build step
+
+    > [!CAUTION]
+    > Proyek ini tidak mengikuti standar-standar produksi dan hanya bermaksud untuk dipakai sebagai playground (testing).
+
+    Note:
+    - Babel standalone tidak di rekomendasikan untuk production
+    - CDN Tailwind tidak sepenuhnya meniru perilaku produksi (terutama yang terkait dengan plugin atau optimasi saat build)
+      tidak akan berperilaku sama seperti di produksi.
+-->
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React Playground</title>
+
+    <!-- React 18 -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+    <!-- Babel standalone (JSX support) -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!-- Tailwind Merge (mengatasi konflik tailwind classes) -->
+    <script src="https://cdn.jsdelivr.net/npm/tailwind-merge@3.4.0/dist/bundle-cjs.min.js"></script>
+
+    <!-- clsx (utilitas untuk membuat string className) -->
+    <script src="https://cdn.jsdelivr.net/npm/clsx@2.1.1/dist/clsx.min.js"></script>
+
+    <!-- Hot reload -->
+    <script src="./reload.js"></script>
+
+    <!-- Tailwind v4 -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style type="text/tailwindcss">
+
+        @import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+        @import "tailwindcss";
+
+        @theme {
+            --font-sans: "Roboto", sans-serif;
+        }
+
+        /* 
+        *   Tambahkan custom theme di sini (opsional)
+        */
+
+    </style>
+</head>
+
+<body class="bg-white text-neutral-950">
+    <div id="root"></div>
+
+    <!-- cn utility function -->
+    <script type="text/javascript">
+        function cn(...classes) {
+            return (tailwindMerge(clsx(...classes)));
+        }
+    </script>
+
+    <script type="text/babel">
+        const { createRoot } = ReactDOM;
+        const { useState, useEffect } = React;
+
+        function Main() {
+            {/* Start here */}
+        }
+
+        
+        function App() {
+            return (
+                <div className="flex min-h-screen">
+                    <div className="flex-1 px-4 py-8">
+                        <div className="pt-25 max-w-245 mx-auto my-0">
+                            <header>
+                                <h1 className="text-4xl font-bold">React Playground</h1>
+                                <p className="mb-5 text-gray-400">Experiment with react components</p>
+                            </header>
+                            <main className="h-200 border-2 border-gray-300 rounded-xl p-4.5 mb-4">
+                                <Main />
+                            </main>
+                        </div>
+                    </div>
+
+                </div>
+            );
+        }
+
+        const root = createRoot(document.getElementById("root"));
+        root.render(
+            <React.StrictMode>
+                <App />
+            </React.StrictMode>
+        );
+    </script>
+</body>
+
+</html>
