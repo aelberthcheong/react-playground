@@ -3,10 +3,10 @@
     ----------------
     - Bereksperimen dengan komponen
     - Visual testing
-    - zero build step
+    - Zero build step
 
     > [!CAUTION]
-    > Proyek ini tidak mengikuti standar-standar produksi dan hanya bermaksud untuk dipakai sebagai playground (testing).
+    > Proyek ini tidak mengikuti standar produksi dan hanya bermaksud untuk dipakai sebagai playground (testing).
 
     Note:
     - Babel standalone tidak di rekomendasikan untuk production
@@ -21,24 +21,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>React Playground</title>
 
-    <!-- React 18 -->
-    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-
-    <!-- Babel standalone (JSX support) -->
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-
-    <!-- Tailwind Merge (mengatasi konflik tailwind classes) -->
-    <script src="https://cdn.jsdelivr.net/npm/tailwind-merge@3.4.0/dist/bundle-cjs.min.js"></script>
-
-    <!-- clsx (utilitas untuk membuat string className) -->
-    <script src="https://cdn.jsdelivr.net/npm/clsx@2.1.1/dist/clsx.min.js"></script>
-
-    <!-- Hot reload -->
-    <script src="./reload.js"></script>
-
-    <!-- Tailwind v4 -->
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <style type="text/tailwindcss">
 
         @import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
@@ -58,38 +40,82 @@
 <body class="bg-white text-neutral-950">
     <div id="root"></div>
 
-    <!-- cn utility function -->
-    <script type="text/javascript">
-        function cn(...classes) {
-            return (tailwindMerge(clsx(...classes)));
-        }
-    </script>
+    <!-- React 18 & Babel (JSX support) -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js" defer></script>
 
+    <!-- Tailwind v4 -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <!-- cn utility -->
+    <script src="https://cdn.jsdelivr.net/npm/tailwind-merge@3.4.0/dist/bundle-cjs.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/clsx@2.1.1/dist/clsx.min.js" defer></script>
+    
     <script type="text/babel">
         const { createRoot } = ReactDOM;
         const { useState, useEffect } = React;
 
-        function Main() {
-            {/* Start here */}
+        // Utility untuk resolve className conflict
+        function cn(...classes) {
+            return (twMerge(clsx(...classes)));
         }
 
+        function Main() {
+
+            {/* Mulai dari sini, hapus dan ganti sesuai implementasi sendiri */}
+            const [count, setCount] = useState(0);
+
+            return (
+                <div className="flex flex-col flex-1 items-center justify-center space-y-6">
+                    <div className="text-center">
+                        <h2 className="text-6xl font-black text-blue-600">{count}</h2>
+                        <p className="text-neutral-500 uppercase tracking-widest text-sm">Current Counter</p>
+                    </div>
+                    
+                    <div className="flex gap-4">
+                        <button 
+                            onClick={() => setCount(c => c - 1)}
+                            className="px-6 py-2 bg-neutral-100 hover:bg-neutral-200 rounded-lg transition-all cursor-pointer active:scale-95"
+                        >
+                            Decrease
+                        </button>
+                        <button 
+                            onClick={() => setCount(c => c + 1)}
+                            className="px-6 py-2 bg-blue-600 text-white hover:bg-blue-700 rounded-lg shadow-lg cursor-pointer shadow-blue-200 transition-all active:scale-95"
+                        >
+                            Increase
+                        </button>
+                    </div>
+
+                    <button 
+                        onClick={() => setCount(0)}
+                        className="text-sm text-neutral-400 cursor-pointer hover:underline hover:text-blue-600"
+                    >
+                        Reset counter
+                    </button>
+                </div>
+            );
+        }
         
         function App() {
             return (
-                <div className="flex min-h-screen">
-                    <div className="flex-1 px-4 py-8">
-                        <div className="pt-25 max-w-245 mx-auto my-0">
-                            <header>
-                                <h1 className="text-4xl font-bold">React Playground</h1>
-                                <p className="mb-5 text-gray-400">Experiment with react components</p>
+                    <div className="px-4 py-8">
+                        <div className="max-w-4xl mx-auto my-0">
+                            <header className="mb-6">
+                                <h1 className="text-4xl font-bold text-blue-600">React Playground</h1>
+                                <p className="text-neutral-500">Eksperimen dengan komponen React</p>
                             </header>
-                            <main className="h-200 border-2 border-gray-300 rounded-xl p-4.5 mb-4">
+                            
+                            <main className="flex md:min-h-[560px] border-2 border-dashed border-neutral-200 rounded-3xl bg-neutral-50/50">
                                 <Main />
                             </main>
+
+                            <footer className="mt-8 text-center text-xs text-neutral-400">
+                                Menggunakan React 18 + Tailwind v4
+                            </footer>
                         </div>
                     </div>
-
-                </div>
             );
         }
 
