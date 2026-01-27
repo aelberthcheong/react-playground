@@ -1,6 +1,8 @@
 /**
+ * Live Reload Client
  * 
- * 
+ * Script ini menghubungkan browser ke websocket server,
+ * Ketika server mendeteksi perubahan file, browser akan otomatis refresh.
  */
 if ("WebSocket" in window) {
     (() => {
@@ -10,10 +12,13 @@ if ("WebSocket" in window) {
             if (color) hud.style.color = color;
         }
 
+        // reload halaman dan wrap dengan flag `reloading`
+        // untuk mencegah reload ganda.
         function triggerReload() {
             if (reloading) return;
             reloading = true;
             setHud("reloading...", "#eab308");
+            location.reload();
         }
 
         let hud;
@@ -36,21 +41,30 @@ if ("WebSocket" in window) {
             setHud("connecting...");
         });
 
-        let socket;
-        let retries = 0;
-        let reloading = false;
+        let socket;            // instance WebSocket
+        let retries = 0;       // # percobaan reconnect
+        let reloading = false; // flag untuk cegah reload berulang berkali-kali
 
+        /**
+         * Menginisialisasi dan mengelola koneksi WebSocket
+         * Menggunakan exponential backoff (naive) untuk reconnect
+         */
         function connect() {
+
+            // Tentukan protocol berdasarkan protocol halaman (http/https)
             const protocol = location.protocol === 'http:' ? 'ws://' : 'wss://';
             const address  = protocol + location.host + "/ws";
+
             socket = new WebSocket(address);
 
+            // koneksi berhasil
             socket.onopen = () => {
                 retries = 0;
                 setHud("connected", "#22c55e");
                 socket.send("connected");
             };
             
+            // menerima pesan dari server
             socket.onmessage = (msg) => {
                 switch (msg.data) {
                     case "connected":
@@ -67,6 +81,7 @@ if ("WebSocket" in window) {
                 }
             };
 
+            // koneksi terputus
             socket.onclose = () => {
                 setHud("disconnected", "#ef4444");
 
@@ -76,6 +91,7 @@ if ("WebSocket" in window) {
                 setTimeout(connect, delay);
             };
 
+            // error pada waktu koneksi
             socket.onerror = () => socket.close();
         }
 
