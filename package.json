@@ -2,9 +2,13 @@
     "name": "react-playground",
     "version": "1.0.0",
     "description": "experiment with react components",
+    "type": "module",
     "scripts": {
         "serve": "node serve.js"
     },
     "author": "Aelberth Cheong",
-    "license": "MIT"
+    "license": "MIT",
+    "dependencies": {
+        "ws": "^8.19.0"
+    }
 }
