@@ -9,6 +9,7 @@
     "author": "Aelberth Cheong",
     "license": "MIT",
     "dependencies": {
+        "chokidar": "^5.0.0",
         "ws": "^8.19.0"
     }
 }
