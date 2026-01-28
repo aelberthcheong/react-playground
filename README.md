@@ -38,11 +38,9 @@ http://localhost:3000
 
 ---
 
-**Important:**
-
 > [!WARNING]
 > State JavaScript tidak **dipertahankan**
-> Ini adalah Live Reload, bukan HMR Persistensi state harus ditangani secara manual (misalnya localStorage) jika diperlukan.
+> Persistensi state harus ditangani secara manual (misalnya localStorage) jika diperlukan.
 
 ## When to Use
 
